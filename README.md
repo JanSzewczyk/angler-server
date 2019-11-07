@@ -28,7 +28,7 @@ $ mvn install
 
 ### Run Spring Boot app with java -jar command
 ```
-$ java -jar target/fishlog-0.0.1-SNAPSHOT.jar
+$ java -jar target/angler-0.0.1-SNAPSHOT.jar
 ```
 
 ### Run Spring Boot app using Maven

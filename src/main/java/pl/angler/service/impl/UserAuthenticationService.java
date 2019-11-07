@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import pl.angler.entity.User;
-import pl.angler.exception.NotFoundException;
 import pl.angler.exception.UnauthorizedException;
 import pl.angler.repository.UserRepository;
 
@@ -23,10 +22,14 @@ public class UserAuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) {
 
+        if(!this.userRepository.existsByEmail(s)) {
+            throw new UnauthorizedException("Invalid email.");
+        }
+
         User user = userRepository.findByEmail(s);
 
-        if(user == null) {
-            throw new UnauthorizedException("Invalid email.");
+        if (!user.isAuthenticated()) {
+            throw new UnauthorizedException("The user has not been confirmed, check your email.");
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();

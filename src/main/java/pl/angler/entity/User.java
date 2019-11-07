@@ -1,5 +1,6 @@
 package pl.angler.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import pl.angler.validation.EmailValidator;
 import pl.angler.validation.PasswordValidator;
@@ -27,7 +28,7 @@ public class User {
 
     @PasswordValidator
     @Column(name = "password")
-    //@JsonIgnore
+//    @JsonIgnore
     private String password;
 
     @NotEmpty
@@ -38,9 +39,12 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull
+//    @NotNull
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Column(name = "authenticated")
+    private boolean authenticated;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -58,5 +62,6 @@ public class User {
         this.lastName = lastName;
         this.roles = roles;
     }
+
 }
 

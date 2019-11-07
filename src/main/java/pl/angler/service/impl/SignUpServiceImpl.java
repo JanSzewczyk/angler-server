@@ -37,11 +37,13 @@ public class SignUpServiceImpl implements SignUpService {
         List<Role> roles = new ArrayList<>();
         roles.add(userRole.get());
 
+        System.out.println(newUser.getPassword());
         // Password encode
         String encoded = new BCryptPasswordEncoder().encode(newUser.getPassword());
         newUser.setPassword(encoded);
 
         newUser.setRoles(roles);
+        newUser.setAuthenticated(false);
         this.userRepository.save(newUser);
 
         System.out.println(newUser);
