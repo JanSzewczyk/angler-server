@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import pl.angler.entity.User;
 import pl.angler.exception.NotFoundException;
+import pl.angler.exception.UnauthorizedException;
 import pl.angler.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -22,14 +23,10 @@ public class UserAuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) {
 
-        System.out.println("UsERNAME ::" + s);
-
         User user = userRepository.findByEmail(s);
 
-        System.out.println("USERRRRRRRRRRR: " + user);
-
         if(user == null) {
-            throw new NotFoundException("Invalid email.");
+            throw new UnauthorizedException("Invalid email.");
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
