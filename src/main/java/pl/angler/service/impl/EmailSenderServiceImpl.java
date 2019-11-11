@@ -28,62 +28,75 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     @Autowired
     private Configuration config;
 
-    private Map<String, Object> model;
+    //    @Override
+//    public MailResponse sendEmail(MailRequest request, Map<String, Object> model) {
+//        MailResponse response = new MailResponse();
+//        MimeMessage message = sender.createMimeMessage();
+//        try {
+//            // set mediaType
+//            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+//                    StandardCharsets.UTF_8.name());
+//            // add attachment
+//            helper.addAttachment("logo.png", new ClassPathResource("logo.png"));
+//
+//            Template t = config.getTemplate("email-template.ftl");
+//            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+//
+//            helper.setTo(request.getTo());
+//            helper.setText(html, true);
+//            helper.setSubject(request.getSubject());
+//            helper.setFrom(request.getFrom());
+//            sender.send(message);
+//
+//            response.setMessage("mail send to : " + request.getTo());
+//            response.setStatus(Boolean.TRUE);
+//
+//        } catch (MessagingException | IOException | TemplateException e) {
+//            response.setMessage("Mail Sending failure : "+e.getMessage());
+//            response.setStatus(Boolean.FALSE);
+//        }
+//
+//        return response;
+//    }
 
     @Override
-    public MailResponse sendEmail(MailRequest request, Map<String, Object> model) {
-        MailResponse response = new MailResponse();
-        MimeMessage message = sender.createMimeMessage();
-        try {
-            // set mediaType
-            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
-            // add attachment
-            helper.addAttachment("logo.png", new ClassPathResource("logo.png"));
+    public void sendConfirmationMail(String userName, String userEmail) throws MessagingException, IOException, TemplateException {
+        Map<String, Object> model = new HashMap<>();
+        model.put("Name", userName);
+        model.put("Email", userEmail);
 
-            Template t = config.getTemplate("email-template.ftl");
-            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+        // Set template
+        Template t = config.getTemplate("confirm-template.ftl");
+        String subject = "[Angler] Registration confirmation";
+        String from = "angler.support@angler.com";
 
-            helper.setTo(request.getTo());
-            helper.setText(html, true);
-            helper.setSubject(request.getSubject());
-            helper.setFrom(request.getFrom());
-            sender.send(message);
-
-            response.setMessage("mail send to : " + request.getTo());
-            response.setStatus(Boolean.TRUE);
-
-        } catch (MessagingException | IOException | TemplateException e) {
-            response.setMessage("Mail Sending failure : "+e.getMessage());
-            response.setStatus(Boolean.FALSE);
-        }
-
-        return response;
+        this.sendMail(t, model, userEmail, subject, from);
     }
 
     @Override
-    public void sendConfirmationMail(Long userId, String userName, String userEmail) throws MessagingException, IOException, TemplateException {
-
-        this.model = new HashMap<>();
+    public void sendRetrieveMail(String userName, String userEmail) throws MessagingException, IOException, TemplateException {
+        Map<String, Object> model = new HashMap<>();
         model.put("Name", userName);
-        model.put("Id", userId);
+        model.put("Email", userEmail);
 
-        MailResponse response = new MailResponse();
+        // Set template
+        Template t = config.getTemplate("retrieve-template.ftl");
+        String subject = "[Angler] Registration confirmation";
+        String from = "angler.support@angler.com";
+
+        this.sendMail(t, model, userEmail, subject, from);
+    }
+
+    private void sendMail(Template template,  Map<String, Object> model, String userEmail, String subject, String from) throws MessagingException, IOException, TemplateException {
         MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
 
-        // set mediaType
-        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                StandardCharsets.UTF_8.name());
-//            // add attachment
-//            helper.addAttachment("logo.png", new ClassPathResource("logo.png"));
-
-        Template t = config.getTemplate("confirm-template.ftl");
-        String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
         helper.setTo(userEmail);
         helper.setText(html, true);
-        helper.setSubject("[Angler] Registration confirmation");
-        helper.setFrom("angler.support@angler.com");
+        helper.setSubject(subject);
+        helper.setFrom(from);
         sender.send(message);
     }
 }

@@ -12,6 +12,7 @@ import pl.angler.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserAuthenticationService implements UserDetailsService {
@@ -21,15 +22,16 @@ public class UserAuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) {
+        Optional<User> findUser = userRepository.findByEmail(s);
 
-        if(!this.userRepository.existsByEmail(s)) {
+        if (!findUser.isPresent()) {
             throw new UnauthorizedException("Invalid email.");
         }
 
-        User user = userRepository.findByEmail(s);
+        User user = findUser.get();
 
         if (!user.isAuthenticated()) {
-            throw new UnauthorizedException("The user has not been confirmed, check your email.");
+            throw new UnauthorizedException("Your e-mail has not been confirmed, check your mailbox.");
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -39,9 +41,6 @@ public class UserAuthenticationService implements UserDetailsService {
 
         UserDetails userDetails =
                 new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
-
-        //todo delete
-        System.out.println("DATA : " + userDetails);
 
         return userDetails;
     }

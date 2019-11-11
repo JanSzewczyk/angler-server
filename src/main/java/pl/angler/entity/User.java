@@ -1,6 +1,5 @@
 package pl.angler.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import pl.angler.validation.EmailValidator;
 import pl.angler.validation.PasswordValidator;
