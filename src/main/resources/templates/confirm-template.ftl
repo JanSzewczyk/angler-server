@@ -268,7 +268,7 @@
         }
         .btn1 {
             z-index: 3;
-            color: #f4f4f4;
+            color: #27ae60;
         }
         .btn1:hover {
             z-index: 3;
@@ -333,12 +333,12 @@
                     >
                         <tr>
                             <td width="40%" class="logo" style="text-align: left;">
-                                <h1><a href="http://www.localhost:8080/">Travel</a></h1>
+                                <h1><a href="localhost:3000/">Travel</a></h1>
                             </td>
                             <td width="60%" class="logo" style="text-align: right;">
                                 <ul class="navigation">
-                                    <li><a href="http://www.localhost:8080/">Home</a></li>
-                                    <li><a href="http://www.localhost:8080/">About</a></li>
+                                    <li><a href="localhost:3000/">Home</a></li>
+                                    <li><a href="localhost:3000/">About</a></li>
                                     <!-- <li><a href="#">Works</a></li>
                                     <li><a href="#">Blog</a></li>
                                     <li><a href="#">Contact</a></li> -->
@@ -392,14 +392,14 @@
                                             <div class="heading-section" style="text-align: center; padding: 0 30px;">
                                                 <p> To complete the registration process, click button below: </p>
                                             </div>
-                                            <a href="http://www.localhost:8080/a" style="text-decoration: none;">
+                                            <a href="localhost:3000/confirm?email=${Email}" style="text-decoration: none;">
                                                 <div class="button btn1">CONFIRM YOUR EMAIL ADDRESS</div>
                                             </a>
                                             <div style="vertical-align:top;width:80%;max-width:600px;margin:0 auto 16px auto;border-bottom-width:2px;border-style:solid;border-bottom-color:#27ae60;border-top:none;border-right:none;border-left:none;height:9.5px;padding: 16px 8px 8px 8px;"></div>
                                             <div class="heading-section" style="text-align: center; padding: 0 30px;">
                                                 <p> Or go to the link below:</p>
                                             </div>
-                                            <a href="http://www.twitter.com/${Email}" style="color: rgba(0, 0, 0, 0.8);margin: 0 auto;;">
+                                            <a href="localhost:3000/confirm?email=${Email}" style="color: rgba(0, 0, 0, 0.8);margin: 0 auto;;">
                                                 http//:www.angler...
                                             </a>
 
