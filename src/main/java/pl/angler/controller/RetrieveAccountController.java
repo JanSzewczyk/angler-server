@@ -22,8 +22,7 @@ public class RetrieveAccountController {
 
     @PutMapping("")
     public ResponseEntity<Void> changePassword(@RequestBody RetrieveAccountDto retAcc){
-
         this.retrieveAccountService.retrievePassword(retAcc);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -53,11 +53,12 @@ public class SignUpServiceImpl implements SignUpService {
         newUser.setRoles(roles);
         newUser.setAuthenticated(false);
 
-        this.userRepository.save(newUser);
-
         // Send Confirmation Mail
         try {
             this.emailSenderService.sendConfirmationMail(newUser.getFirstName(), newUser.getEmail());
+
+            // Add user to DB
+            this.userRepository.save(newUser);
         } catch (MessagingException | IOException | TemplateException e) {
             this.userRepository.deleteById(newUser.getId());
             throw new ServerException("Problem with mail sending. Sorry.");

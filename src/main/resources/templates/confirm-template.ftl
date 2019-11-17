@@ -17,15 +17,13 @@
             color: rgba(0, 0, 0, 0.4);
         }
 
-        .primary {
-            background: #f5564e;
+        .bg_green {
+            background: #208b4a;
         }
         .bg_white {
             background: #ffffff;
         }
-        .bg_light {
-            background: #fafafa;
-        }
+
         .bg_black {
             background: #000000;
         }
@@ -125,28 +123,6 @@
             font-weight: 700;
         }
 
-        .heading-section .subheading{
-            margin-bottom: 20px !important;
-            display: inline-block;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(0,0,0,.4);
-            position: relative;
-        }
-
-        .heading-section .subheading::after{
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -10px;
-            content: '';
-            width: 100%;
-            height: 2px;
-            background: #f5564e;
-            margin: 0 auto;
-        }
-
         .heading-section-white{
             color: rgba(255,255,255,.8);
         }
@@ -160,19 +136,6 @@
         .heading-section-white h2{
             font-family: "Lato", sans-serif;
             color: #ffffff;
-        }
-
-        .heading-section-white .subheading{
-            margin-bottom: 0;
-            display: inline-block;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,.4);
-        }
-
-        .icon{
-            text-align: center;
         }
 
         .icon img{
@@ -189,26 +152,6 @@
             font-weight: 700;
         }
 
-        .heading-section .subheading{
-            margin-bottom: 20px !important;
-            display: inline-block;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(0,0,0,.4);
-            position: relative;
-        }
-        .heading-section .subheading::after{
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -10px;
-            content: '';
-            width: 100%;
-            height: 2px;
-            background: #f5564e;
-            margin: 0 auto;
-        }
         .heading-section-white{
             color: rgba(255,255,255,.8);
         }
@@ -323,7 +266,7 @@
                 style="margin: auto;"
         >
             <tr>
-                <td valign="top" class="bg_white" style="padding: 1em 2.5em;">
+                <td valign="top" class="bg_green" style="padding: 1em 2.5em;">
                     <table
                             role="presentation"
                             border="0"
@@ -333,8 +276,7 @@
                     >
                         <tr>
                             <td width="40%" class="logo" style="text-align: left;">
-                                <h1><a href="localhost:3000/">Travel</a></h1>
-                            </td>
+                                <a href="localhost:3000/"><img src="https://i.ibb.co/jWCk9Km/full-logo.png" alt="full-logo" border="0" height="40"></a>
                             <td width="60%" class="logo" style="text-align: right;">
                                 <ul class="navigation">
                                     <li><a href="localhost:3000/">Home</a></li>
@@ -348,7 +290,7 @@
                     </table>
                 </td>
             </tr>
-            <!-- end trsrc="https://i.ibb.co/cwz32dQ/cnf.jpg" alt="cnf"  -->
+            <!-- end tr src="https://i.ibb.co/cwz32dQ/cnf.jpg" alt="cnf"  -->
             <tr>
                 <td
                         valign="middle"
@@ -390,7 +332,7 @@
                                     <tr>
                                         <td class="bg_white email-section" style="align-items: center;">
                                             <div class="heading-section" style="text-align: center; padding: 0 30px;">
-                                                <p> To complete the registration process, click button below: </p>
+                                                <p> To complete the registration process, click the button below: </p>
                                             </div>
                                             <a href="localhost:3000/confirm?email=${Email}" style="text-decoration: none;">
                                                 <div class="button btn1">CONFIRM YOUR EMAIL ADDRESS</div>
@@ -400,7 +342,7 @@
                                                 <p> Or go to the link below:</p>
                                             </div>
                                             <a href="localhost:3000/confirm?email=${Email}" style="color: rgba(0, 0, 0, 0.8);margin: 0 auto;;">
-                                                http//:www.angler...
+                                                localhost:3000/confirm?email=${Email}
                                             </a>
 
                                         </td>

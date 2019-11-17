@@ -81,7 +81,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
         // Set template
         Template t = config.getTemplate("retrieve-template.ftl");
-        String subject = "[Angler] Registration confirmation";
+        String subject = "[Angler] Password reminder";
         String from = "angler.support@angler.com";
 
         this.sendMail(t, model, userEmail, subject, from);
