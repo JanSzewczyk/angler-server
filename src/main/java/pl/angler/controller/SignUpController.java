@@ -1,20 +1,15 @@
 package pl.angler.controller;
 
-import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.angler.entity.User;
-import pl.angler.exception.ServerException;
 import pl.angler.model.ErrorModel;
-import pl.angler.service.EmailSenderService;
 import pl.angler.service.SignUpService;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.net.URI;
 
 

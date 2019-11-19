@@ -52,10 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		        .realmName(securityRealm)
 		        .and()
 		        .csrf()
-		        .disable()
-//				.authorizeRequests()
-//				.antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
-        ;
+		        .disable();
 	}
 
 	@Bean

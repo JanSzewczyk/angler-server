@@ -8,7 +8,7 @@ import pl.angler.dto.RetrieveAccountDto;
 import pl.angler.entity.User;
 import pl.angler.exception.ConflictException;
 import pl.angler.exception.NotFoundException;
-import pl.angler.exception.ServerException;
+import pl.angler.exception.ServerErrorException;
 import pl.angler.repository.UserRepository;
 import pl.angler.service.EmailSenderService;
 import pl.angler.service.RetrieveAccountService;
@@ -41,7 +41,7 @@ public class RetrieveAccountServiceImpl implements RetrieveAccountService {
         try {
             this.emailSenderService.sendRetrieveMail(user.getFirstName(), user.getEmail());
         } catch (MessagingException | IOException | TemplateException e) {
-            throw new ServerException("Problem with mail sending. Sorry, try later.");
+            throw new ServerErrorException("Problem with mail sending. Sorry, try later.");
         };
     }
 

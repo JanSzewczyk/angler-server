@@ -4,19 +4,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-public class ServerException extends RuntimeException{
-    public ServerException() {
+public class ServerErrorException extends RuntimeException{
+    public ServerErrorException() {
     }
 
-    public ServerException(String s) {
+    public ServerErrorException(String s) {
         super(s);
     }
 
-    public ServerException(String s, Throwable throwable) {
+    public ServerErrorException(String s, Throwable throwable) {
         super(s, throwable);
     }
 
-    public ServerException(Throwable throwable) {
+    public ServerErrorException(Throwable throwable) {
         super(throwable);
     }
 }

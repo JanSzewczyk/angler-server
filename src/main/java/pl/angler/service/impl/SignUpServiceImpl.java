@@ -8,7 +8,7 @@ import pl.angler.entity.Role;
 import pl.angler.entity.User;
 import pl.angler.exception.AlreadyExistsException;
 import pl.angler.exception.NotFoundException;
-import pl.angler.exception.ServerException;
+import pl.angler.exception.ServerErrorException;
 import pl.angler.repository.RoleRepository;
 import pl.angler.repository.UserRepository;
 import pl.angler.service.EmailSenderService;
@@ -61,7 +61,7 @@ public class SignUpServiceImpl implements SignUpService {
             this.userRepository.save(newUser);
         } catch (MessagingException | IOException | TemplateException e) {
             this.userRepository.deleteById(newUser.getId());
-            throw new ServerException("Problem with mail sending. Sorry.");
+            throw new ServerErrorException("Problem with mail sending. Sorry.");
         }
     }
 
