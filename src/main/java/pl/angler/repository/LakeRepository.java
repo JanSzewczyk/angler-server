@@ -2,13 +2,12 @@ package pl.angler.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.angler.entity.User;
+import pl.angler.entity.Lake;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface LakeRepository extends JpaRepository<Lake, Long> {
 
-    Optional<User> findByEmail(String email);
-    boolean existsByEmail(String email);
+    Optional<Lake> findByName(String name);
 }

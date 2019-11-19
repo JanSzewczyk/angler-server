@@ -11,8 +11,12 @@ import pl.angler.service.RetrieveAccountService;
 @RequestMapping("/retrieve")
 public class RetrieveAccountController {
 
+    private final RetrieveAccountService retrieveAccountService;
+
     @Autowired
-    private RetrieveAccountService retrieveAccountService;
+    public RetrieveAccountController(RetrieveAccountService retrieveAccountService) {
+        this.retrieveAccountService = retrieveAccountService;
+    }
 
     @PostMapping("")
     public ResponseEntity<Void> retrieveAccount(@RequestParam(name = "email", required = true) String email){

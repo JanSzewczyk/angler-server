@@ -17,10 +17,14 @@ import java.net.URI;
 @RequestMapping("/signup")
 public class SignUpController {
 
-    @Autowired
-    private SignUpService signUpService;
+    private final SignUpService signUpService;
 
-    @PostMapping("")
+    @Autowired
+    public SignUpController(SignUpService signUpService) {
+        this.signUpService = signUpService;
+    }
+
+    @PostMapping
     public ResponseEntity createUser(@Valid @RequestBody User newUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
             return ResponseEntity.badRequest().body(new ErrorModel(bindingResult));
