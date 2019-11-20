@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -38,7 +39,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-//    @NotNull
+    @NotNull
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
@@ -53,6 +54,13 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
+
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    private List<FishingTrip> fishingTrip;
 
     public User() {
     }
