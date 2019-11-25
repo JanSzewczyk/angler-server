@@ -1,6 +1,5 @@
 package pl.angler.service;
 
-
 import pl.angler.entity.User;
 
 public interface SignUpService {

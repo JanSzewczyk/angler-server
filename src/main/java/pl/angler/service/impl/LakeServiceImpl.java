@@ -25,15 +25,17 @@ import java.util.List;
 @Service
 public class LakeServiceImpl implements LakeService {
 
-    @Autowired
-    private LakeUtils lakeUtils;
-
-    @Autowired
-    private LakeRepository lakeRepository;
+    private final LakeUtils lakeUtils;
+    private final LakeRepository lakeRepository;
 
     private CloseableHttpClient httpClient;
 
-    @Scheduled(fixedDelayString = "66000")
+    public LakeServiceImpl(LakeUtils lakeUtils, LakeRepository lakeRepository) {
+        this.lakeUtils = lakeUtils;
+        this.lakeRepository = lakeRepository;
+    }
+
+//    @Scheduled(fixedDelayString = "66000")
     @Override
     public void downloadFishery() throws IOException, SAXException, ParserConfigurationException {
         String fisheryData;

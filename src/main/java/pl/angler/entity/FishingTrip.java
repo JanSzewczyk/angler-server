@@ -1,11 +1,16 @@
 package pl.angler.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@ToString
 @Entity
 @Table(name="fishing_trip")
 public class FishingTrip {
@@ -21,7 +26,15 @@ public class FishingTrip {
                     CascadeType.REFRESH}
     )
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
+
+    @Column(name = "title", length = 256)
+    private String title;
+
+    @NotNull
+    @Column(name = "trip_date")
+    private LocalDate tripDate;
 
     @Column(name = "description", length = 256)
     private String description;

@@ -14,7 +14,7 @@ import java.net.URI;
 
 
 @RestController
-@RequestMapping("/signup")
+@RequestMapping("/signUp")
 public class SignUpController {
 
     private final SignUpService signUpService;

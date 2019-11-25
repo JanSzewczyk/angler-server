@@ -1,5 +1,6 @@
 package pl.angler.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,21 +20,19 @@ public class Fishery {
     @Column(name = "name", length = 256, unique = true, nullable = false)
     private String name;
 
-    @Column(name = "description", length = 256)
-    private String description;
-
     @NotNull
     @Column(name = "altitude")
-    private Double altitude; //wysokość
+    private Double altitude; //dlugość 19
 
     @NotNull
     @Column(name = "latitude")
-    private Double latitude; //szerokość
+    private Double latitude; //szerokość 51
 
     @OneToMany(
             mappedBy = "fishery",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
+    @JsonIgnore
     private List<FishingTrip> fishingTrip;
 }

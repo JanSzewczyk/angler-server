@@ -18,13 +18,13 @@ public class RetrieveAccountController {
         this.retrieveAccountService = retrieveAccountService;
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<Void> retrieveAccount(@RequestParam(name = "email", required = true) String email){
         this.retrieveAccountService.retrievePasswordMailSender(email);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity<Void> changePassword(@RequestBody RetrieveAccountDto retAcc){
         this.retrieveAccountService.retrievePassword(retAcc);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

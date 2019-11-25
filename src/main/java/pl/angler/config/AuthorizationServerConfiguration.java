@@ -59,7 +59,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		        .authorizedGrantTypes(grantType)
 		        .scopes(scopeRead, scopeWrite)
 		        .resourceIds(resourceIds)
-				.accessTokenValiditySeconds(3600);
+				.accessTokenValiditySeconds(4444444);
 	}
 
 	@Override

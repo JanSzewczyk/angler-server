@@ -1,6 +1,7 @@
 package pl.angler.entity;
 
 import lombok.Data;
+import lombok.ToString;
 import pl.angler.validation.EmailValidator;
 import pl.angler.validation.PasswordValidator;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@ToString
 @Entity
 @Table(name = "user")
 public class User {
