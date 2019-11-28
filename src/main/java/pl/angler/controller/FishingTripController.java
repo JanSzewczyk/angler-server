@@ -27,14 +27,40 @@ public class FishingTripController {
     }
 
     @PostMapping
+    @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<Void> createNewFishingTrip(
             final Principal principal,
             @RequestBody FishingTrip newFishingTrip
-            ) {
+    ) {
 
         System.out.println(newFishingTrip);
         this.fishingTripService.saveNewFishingTrip(principal.getName(), newFishingTrip);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+    @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
+    public ResponseEntity<FishingTrip> getTripByID(final Principal principal, @PathVariable("id") Long id) {
+
+        return new ResponseEntity<>(this.fishingTripService.findTripById(principal.getName(), id) , HttpStatus.OK);
+    }
+
+    @PutMapping
+    @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
+    public ResponseEntity<Void> updateFishingTrip(
+            final Principal principal,
+            @RequestBody FishingTrip updateFishingTrip
+    ) {
+        this.fishingTripService.updateFishingTrip(principal.getName(), updateFishingTrip);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
+    public ResponseEntity<Void> removeFishingTrip(@PathVariable("id") Long id) {
+        this.fishingTripService.removeFishingTrip(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

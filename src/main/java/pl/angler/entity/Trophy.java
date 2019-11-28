@@ -1,5 +1,6 @@
 package pl.angler.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Trophy {
                     CascadeType.REFRESH}
     )
     @JoinColumn(name = "fishing_trip_id")
+    @JsonIgnore
     private FishingTrip fishingTrip;
 
     @Column(name = "size")

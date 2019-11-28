@@ -10,4 +10,10 @@ public interface FishingTripService {
     List<FishingTripDto> getTrips(String email);
 
     void saveNewFishingTrip(String email, FishingTrip newFishingTrip);
+
+    FishingTrip findTripById(String name, Long id);
+
+    void updateFishingTrip(String email, FishingTrip updateFishingTrip);
+
+    void removeFishingTrip(Long id);
 }

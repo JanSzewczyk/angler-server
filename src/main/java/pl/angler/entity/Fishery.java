@@ -28,6 +28,12 @@ public class Fishery {
     @Column(name = "latitude")
     private Double latitude; //szerokość 51
 
+    @Column(name = "privateFishery")
+    private Boolean privateFishery = true;
+
+    @Column(name = "description", length = 256)
+    private String description;
+
     @OneToMany(
             mappedBy = "fishery",
             fetch = FetchType.LAZY,
@@ -35,4 +41,14 @@ public class Fishery {
     )
     @JsonIgnore
     private List<FishingTrip> fishingTrip;
+
+    @ManyToOne(
+            cascade = {CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH}
+    )
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 }

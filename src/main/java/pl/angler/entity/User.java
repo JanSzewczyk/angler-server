@@ -64,6 +64,13 @@ public class User {
     )
     private List<FishingTrip> fishingTrip;
 
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    private List<Fishery> fisheries;
+
     public User() {
     }
 

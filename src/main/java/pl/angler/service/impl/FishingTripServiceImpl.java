@@ -43,7 +43,41 @@ public class FishingTripServiceImpl implements FishingTripService {
             throw new NotFoundException("The user with this email not exists.");
         }
         newFishingTrip.setUser(findUser.get());
-
+        newFishingTrip.getFishery().setUser(findUser.get());
         this.fishingTripRepository.save(newFishingTrip);
+    }
+
+    @Override
+    public FishingTrip findTripById(String email, Long id) {
+        Optional<FishingTrip> findFishingTrip = this.fishingTripRepository.findByUser_emailAndId(email, id);
+        if (!findFishingTrip.isPresent()) {
+            throw new NotFoundException("No resources found");
+        }
+        return findFishingTrip.get();
+    }
+
+    @Override
+    public void updateFishingTrip(String email, FishingTrip updateFishingTrip) {
+        Optional<User> findUser = this.userRepository.findByEmail(email);
+
+        if (!findUser.isPresent()) {
+            throw new NotFoundException("The user with this email not exists.");
+        }
+
+        if (!this.fishingTripRepository.existsByUser_emailAndId(email, updateFishingTrip.getId())) {
+            throw new NotFoundException("No resources found.");
+        }
+        updateFishingTrip.setUser(findUser.get());
+        this.fishingTripRepository.save(updateFishingTrip);
+    }
+
+    @Override
+    public void removeFishingTrip(Long id) {
+        Optional<FishingTrip> findFishingTrip = this.fishingTripRepository.findById(id);
+        if (!findFishingTrip.isPresent()) {
+            throw new NotFoundException("No resources found");
+        }
+        FishingTrip fishingTrip = findFishingTrip.get();
+        this.fishingTripRepository.delete(fishingTrip);
     }
 }

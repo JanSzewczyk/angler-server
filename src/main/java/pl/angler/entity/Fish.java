@@ -1,7 +1,7 @@
 package pl.angler.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.hibernate.validator.constraints.EAN;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -28,5 +28,6 @@ public class Fish {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}
     )
+    @JsonIgnore
     private List<Trophy> trophies;
 }
