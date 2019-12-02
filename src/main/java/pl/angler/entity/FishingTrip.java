@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@ToString
 @Entity
 @Table(name="fishing_trip")
 public class FishingTrip {

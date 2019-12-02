@@ -16,7 +16,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="role_name")
+    @Column(name="role_name", unique = true)
     private String roleName;
 
     @Column(name="description")

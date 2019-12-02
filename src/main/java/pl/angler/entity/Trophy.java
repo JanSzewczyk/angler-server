@@ -1,12 +1,17 @@
 package pl.angler.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="trophy")
 public class Trophy {
 
@@ -33,9 +38,13 @@ public class Trophy {
     @JsonIgnore
     private FishingTrip fishingTrip;
 
-    @Column(name = "size")
-    private Double size;
+    @Column(name = "length")
+    private Double length;
 
     @Column(name = "weight")
     private Double weight;
+
+    @Column(name = "time")
+    private LocalTime time;
+
 }
