@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class LakeUtils {
+public class LakesParserUtils {
 
     public List<Lake> parseXmlToObjects(String fisheryData) throws ParserConfigurationException, IOException, SAXException {
 
@@ -38,7 +38,6 @@ public class LakeUtils {
 
             if (provinceNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element provinceElement = (Element) provinceNode;
-                //System.out.println("Province : " + provinceElement.getElementsByTagName("name").item(0).getTextContent());
 
                 NodeList lakeNodeList = provinceElement.getElementsByTagName("Placemark");
                 for (int j = 0; j < lakeNodeList.getLength(); j++) {
@@ -47,11 +46,8 @@ public class LakeUtils {
                     if (leakNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element lakeElement = (Element) leakNode;
 
-                        // System.out.println("Lake : " + lakeElement.getElementsByTagName("name").item(0).getTextContent());
                         String[] coordinates = lakeElement.getElementsByTagName("coordinates").item(0).getTextContent().split(",");
-                        // System.out.println(coordinates[0] + " " + coordinates[1]);
-
-                        lakes.add(this.addOrUpdateFishery(lakeElement.getElementsByTagName("name").item(0).getTextContent(), coordinates[0], coordinates[1]));
+                        lakes.add(this.mapToObjectLake(lakeElement.getElementsByTagName("name").item(0).getTextContent(), coordinates[0], coordinates[1]));
                     }
                 }
             }
@@ -60,7 +56,7 @@ public class LakeUtils {
         return lakes;
     }
 
-    private Lake addOrUpdateFishery(String name, String alt, String lat) {
+    private Lake mapToObjectLake(String name, String alt, String lat) {
         Lake lake = new Lake();
 
         Double altitude = Double.parseDouble(alt);

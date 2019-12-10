@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UserInformationDto {
 
+    private String nick;
     private String firstName;
     private String lastName;
     private String email;

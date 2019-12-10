@@ -36,6 +36,6 @@ public class UserServiceImpl implements UserService {
                 .map(Role::getRoleName)
                 .collect(Collectors.toList());
 
-        return  new UserInformationDto(user.getFirstName(), user.getLastName(), user.getEmail(), user.getBirthDate(), roles);
+        return  new UserInformationDto(user.getNick(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getBirthDate(), roles);
     }
 }

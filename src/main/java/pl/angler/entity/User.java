@@ -24,6 +24,10 @@ public class User {
     private Long id;
 
     @NotEmpty
+    @Column(name = "nick", unique = true)
+    private String nick;
+
+    @NotEmpty
     @EmailValidator
     @Column(name = "email", unique = true)
     private String email;

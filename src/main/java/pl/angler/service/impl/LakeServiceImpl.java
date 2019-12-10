@@ -1,5 +1,6 @@
 package pl.angler.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -7,7 +8,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
@@ -16,33 +16,39 @@ import pl.angler.entity.Lake;
 import pl.angler.exception.ServerErrorException;
 import pl.angler.repository.LakeRepository;
 import pl.angler.service.LakeService;
-import pl.angler.util.LakeUtils;
+import pl.angler.util.LakesParserUtils;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.List;
 
+@Slf4j
 @Service
 public class LakeServiceImpl implements LakeService {
 
-    private final LakeUtils lakeUtils;
+    private final LakesParserUtils lakesParserUtils;
     private final LakeRepository lakeRepository;
 
     private CloseableHttpClient httpClient;
 
-    public LakeServiceImpl(LakeUtils lakeUtils, LakeRepository lakeRepository) {
-        this.lakeUtils = lakeUtils;
+    public LakeServiceImpl(LakesParserUtils lakesParserUtils, LakeRepository lakeRepository) {
+        this.lakesParserUtils = lakesParserUtils;
         this.lakeRepository = lakeRepository;
     }
 
-//    @Scheduled(fixedDelayString = "66000")
+    @Override
+    public List<Lake> getAllLakes() {
+        return this.lakeRepository.findAll();
+    }
+
+    @Scheduled(fixedDelayString = "666000")
     @Override
     public void downloadFishery() throws IOException, SAXException, ParserConfigurationException {
         String fisheryData;
 
         try {
             fisheryData = this.getFishery();
-            saveOrUpdateFishery(this.lakeUtils.parseXmlToObjects(fisheryData));
+            saveOrUpdateFishery(this.lakesParserUtils.parseXmlToObjects(fisheryData));
         } catch (IOException e) {
             throw new ServerErrorException(e.getMessage());
         }
@@ -66,22 +72,17 @@ public class LakeServiceImpl implements LakeService {
         HttpGet request = new HttpGet(uri);
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
-            // Get HttpResponse Status
-            //System.out.println(response.getStatusLine().toString());
-
             HttpEntity entity = response.getEntity();
             Header headers = entity.getContentType();
-            //System.out.println(headers);
 
             return EntityUtils.toString(entity);
         }
     }
 
     private void saveOrUpdateFishery(List<Lake> lakes) {
-        System.out.println(lakes);
+        log.info("Fisheries were updated.");
+        this.lakeRepository.deleteAll();
 
-//        this.fisheryRepository.deleteAll();
-//
-//        this.fisheryRepository.saveAll(fisheryList);
+        this.lakeRepository.saveAll(lakes);
     }
 }

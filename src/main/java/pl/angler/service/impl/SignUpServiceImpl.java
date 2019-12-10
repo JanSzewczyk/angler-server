@@ -37,6 +37,9 @@ public class SignUpServiceImpl implements SignUpService {
         if(this.userRepository.existsByEmail(newUser.getEmail())) {
             throw new AlreadyExistsException("The user with this email already exists.");
         }
+        if(this.userRepository.existsByNick(newUser.getNick())) {
+            throw new AlreadyExistsException("The user with this nick already exists.");
+        }
 
         Optional<Role> userRole = this.roleRepository.findById(1L);
         if(!userRole.isPresent()) {
