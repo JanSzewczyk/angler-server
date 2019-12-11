@@ -9,11 +9,11 @@ public interface FishingTripService {
 
     List<FishingTripDto> getTrips(String email);
 
-    void saveNewFishingTrip(String email, FishingTrip newFishingTrip);
+    void saveNewFishingTrip(String email, FishingTripDto newFishingTrip);
 
     FishingTrip findTripById(String name, Long id);
 
-    void updateFishingTrip(String email, FishingTrip updateFishingTrip);
+    void updateFishingTrip(String email, FishingTripDto updateFishingTrip);
 
     void removeFishingTrip(Long id);
 }

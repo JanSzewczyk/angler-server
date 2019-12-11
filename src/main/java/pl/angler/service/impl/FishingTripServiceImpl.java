@@ -2,6 +2,7 @@ package pl.angler.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.angler.dto.FisheryDto;
 import pl.angler.dto.FishingTripDto;
 import pl.angler.entity.Fishery;
 import pl.angler.entity.FishingTrip;
@@ -31,44 +32,84 @@ public class FishingTripServiceImpl implements FishingTripService {
         return this.fishingTripRepository.findByUser_emailOrderByTripDateDesc(email)
                 .stream()
                 .map(fishingTrip -> {
-                    return new FishingTripDto(fishingTrip.getId(), fishingTrip.getTitle(), fishingTrip.getTripDate(), fishingTrip.getDescription(), fishingTrip.getFishery());
+                    Fishery fishery = fishingTrip.getFishery();
+                    return new FishingTripDto(
+                            fishingTrip.getId(),
+                            fishingTrip.getTitle(),
+                            fishingTrip.getTripDate(),
+                            fishingTrip.getDescription(),
+                            new FisheryDto(
+                                    fishery.getId(),
+                                    fishery.getName(),
+                                    fishery.getAltitude(),
+                                    fishery.getLatitude(),
+                                    fishery.getDescription()
+                            ));
                 })
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void saveNewFishingTrip(String email, FishingTrip newFishingTrip) {
+    public void saveNewFishingTrip(String email, FishingTripDto newFishingTrip) {
         Optional<User> findUser = this.userRepository.findByEmail(email);
         if (!findUser.isPresent()) {
             throw new NotFoundException("The user with this email not exists.");
         }
-        newFishingTrip.setUser(findUser.get());
-        newFishingTrip.getFishery().setUser(findUser.get());
-        this.fishingTripRepository.save(newFishingTrip);
+
+        FishingTrip fishingTrip = new FishingTrip();
+        fishingTrip.setTitle(newFishingTrip.getTitle());
+        fishingTrip.setDescription(newFishingTrip.getDescription());
+        fishingTrip.setTripDate(newFishingTrip.getTripDate());
+        fishingTrip.setUser(findUser.get());
+
+        Fishery fishery = new Fishery();
+        if (newFishingTrip.getFishery().getId() != null) {
+            Optional<Fishery> findFishery = this.fisheryRepository.findById(newFishingTrip.getFishery().getId());
+            if (!findFishery.isPresent()) {
+                throw new NotFoundException("Problem with finding fishery.");
+            }
+            fishery = findFishery.get();
+        }else {
+            FisheryDto data = newFishingTrip.getFishery();
+
+            fishery.setUser(findUser.get());
+            fishery.setName(data.getName());
+            fishery.setDescription(data.getDescription());
+            fishery.setLatitude(data.getLatitude());
+            fishery.setAltitude(data.getAltitude());
+
+            this.fisheryRepository.save(fishery);
+        }
+
+        fishingTrip.setFishery(fishery);
+        this.fishingTripRepository.save(fishingTrip);
     }
 
     @Override
     public FishingTrip findTripById(String email, Long id) {
         Optional<FishingTrip> findFishingTrip = this.fishingTripRepository.findByUser_emailAndId(email, id);
         if (!findFishingTrip.isPresent()) {
-            throw new NotFoundException("No resources found");
+            throw new NotFoundException("Not found resources.");
         }
         return findFishingTrip.get();
     }
 
     @Override
-    public void updateFishingTrip(String email, FishingTrip updateFishingTrip) {
+    public void updateFishingTrip(String email, FishingTripDto updateFishingTrip) {
         Optional<User> findUser = this.userRepository.findByEmail(email);
-
-        if (!findUser.isPresent()) {
+        if (!findUser.isPresent())
             throw new NotFoundException("The user with this email not exists.");
-        }
 
-        if (!this.fishingTripRepository.existsByUser_emailAndId(email, updateFishingTrip.getId())) {
-            throw new NotFoundException("No resources found.");
-        }
-        updateFishingTrip.setUser(findUser.get());
-        this.fishingTripRepository.save(updateFishingTrip);
+        Optional<FishingTrip> findTrip = this.fishingTripRepository.findById(updateFishingTrip.getId());
+        if (!findTrip.isPresent())
+            throw new NotFoundException("Not found resources.");
+
+        FishingTrip fishingTrip = findTrip.get();
+        fishingTrip.setTitle(updateFishingTrip.getTitle());
+        fishingTrip.setDescription(updateFishingTrip.getDescription());
+        fishingTrip.setTripDate(updateFishingTrip.getTripDate());
+
+        this.fishingTripRepository.save(fishingTrip);
     }
 
     @Override

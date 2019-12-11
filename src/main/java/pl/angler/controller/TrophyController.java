@@ -18,7 +18,6 @@ public class TrophyController {
     @PostMapping
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<Void> createNew(@RequestBody TrophyDto trophyDto) {
-        System.out.println(trophyDto);
         this.trophyService.addNewTrophy(trophyDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

@@ -30,12 +30,10 @@ public class FishingTripController {
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<Void> createNewFishingTrip(
             final Principal principal,
-            @RequestBody FishingTrip newFishingTrip
+            @RequestBody FishingTripDto newFishingTrip
     ) {
 
-        System.out.println(newFishingTrip);
         this.fishingTripService.saveNewFishingTrip(principal.getName(), newFishingTrip);
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -50,7 +48,7 @@ public class FishingTripController {
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<Void> updateFishingTrip(
             final Principal principal,
-            @RequestBody FishingTrip updateFishingTrip
+            @RequestBody FishingTripDto updateFishingTrip
     ) {
         this.fishingTripService.updateFishingTrip(principal.getName(), updateFishingTrip);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
