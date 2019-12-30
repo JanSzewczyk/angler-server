@@ -1,4 +1,4 @@
-package pl.angler.config;
+package pl.angler.security;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

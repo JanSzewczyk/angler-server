@@ -1,4 +1,4 @@
-package pl.angler.model;
+package pl.angler.util;
 
 import lombok.Data;
 import org.springframework.validation.BindingResult;

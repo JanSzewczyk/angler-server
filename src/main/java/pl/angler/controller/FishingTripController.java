@@ -1,5 +1,6 @@
 package pl.angler.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import pl.angler.service.FishingTripService;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/trip")
 public class FishingTripController {
@@ -22,16 +24,13 @@ public class FishingTripController {
     @GetMapping
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<List<FishingTripDto>> getTrips(final Principal principal) {
-
+        log.info("User with email: [" + principal.getName() + "] gets fishing trips.");
         return new ResponseEntity<>(this.fishingTripService.getTrips(principal.getName()), HttpStatus.OK);
     }
 
     @PostMapping
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
-    public ResponseEntity<Void> createNewFishingTrip(
-            final Principal principal,
-            @RequestBody FishingTripDto newFishingTrip
-    ) {
+    public ResponseEntity<Void> createNewFishingTrip(final Principal principal, @RequestBody FishingTripDto newFishingTrip) {
 
         this.fishingTripService.saveNewFishingTrip(principal.getName(), newFishingTrip);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -46,10 +45,7 @@ public class FishingTripController {
 
     @PutMapping
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
-    public ResponseEntity<Void> updateFishingTrip(
-            final Principal principal,
-            @RequestBody FishingTripDto updateFishingTrip
-    ) {
+    public ResponseEntity<Void> updateFishingTrip(final Principal principal, @RequestBody FishingTripDto updateFishingTrip) {
         this.fishingTripService.updateFishingTrip(principal.getName(), updateFishingTrip);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -17,7 +17,7 @@ public class Fishery {
     private Long id;
 
     @NotNull
-    @Column(name = "name", length = 256, unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @NotNull
@@ -31,7 +31,7 @@ public class Fishery {
     @Column(name = "privateFishery")
     private Boolean privateFishery = true;
 
-    @Column(name = "description", length = 256)
+    @Column(name = "description")
     private String description;
 
     @OneToMany(
@@ -51,4 +51,10 @@ public class Fishery {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    @OneToOne(
+            mappedBy = "fishery",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Post post;
 }

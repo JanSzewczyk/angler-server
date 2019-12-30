@@ -1,4 +1,4 @@
-package pl.angler.config;
+package pl.angler.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

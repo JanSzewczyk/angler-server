@@ -16,3 +16,7 @@ public class FishingTripDto {
     private String description;
     private FisheryDto fishery;
 }
+
+
+
+

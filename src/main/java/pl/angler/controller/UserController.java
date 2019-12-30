@@ -30,4 +30,12 @@ public class UserController {
 
         return new ResponseEntity<>(this.userService.getUserInformation(principal.getName()), HttpStatus.OK);
     }
+
+    @GetMapping("/all")
+    @PreAuthorize(value = "hasAuthority('ADMIN_USER')")
+    public ResponseEntity<Void> getAllUsers(final Principal principal){
+
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
 }

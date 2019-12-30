@@ -54,7 +54,7 @@ public class SignUpServiceImpl implements SignUpService {
         String encoded = new BCryptPasswordEncoder().encode(newUser.getPassword());
         newUser.setPassword(encoded);
         newUser.setRoles(roles);
-        newUser.setAuthenticated(false);
+        newUser.setConfirmed(false);
 
         // Send Confirmation Mail
         try {
@@ -77,7 +77,7 @@ public class SignUpServiceImpl implements SignUpService {
         }
 
         User user = findUser.get();
-        user.setAuthenticated(true);
+        user.setConfirmed(true);
 
         this.userRepository.save(user);
     }

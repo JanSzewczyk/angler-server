@@ -1,5 +1,6 @@
 package pl.angler.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import pl.angler.service.LakeService;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/lake")
 public class LakeController {
@@ -20,8 +22,9 @@ public class LakeController {
     private LakeService lakeService;
 
     @GetMapping
-    @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<List<Lake>> getAllLakes() {
+
+        log.info("Getting lakes.");
         return new ResponseEntity<>(this.lakeService.getAllLakes(), HttpStatus.OK);
     }
 }

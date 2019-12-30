@@ -29,7 +29,7 @@ public class UserAuthenticationService implements UserDetailsService {
         }
 
         User user = findUser.get();
-        if (!user.isAuthenticated()) {
+        if (!user.isConfirmed()) {
             throw new UnauthorizedException("Your e-mail has not been confirmed, check your mailbox.");
         }
 

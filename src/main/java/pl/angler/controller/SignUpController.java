@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.angler.entity.User;
-import pl.angler.model.ErrorModel;
+import pl.angler.util.ErrorModel;
 import pl.angler.service.SignUpService;
 
 import javax.validation.Valid;

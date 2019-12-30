@@ -13,5 +13,20 @@ public interface FishingTripRepository extends JpaRepository<FishingTrip, Long> 
 
     List<FishingTrip> findByUser_emailOrderByTripDateDesc(String email);
     Optional<FishingTrip> findByUser_emailAndId(String email, Long id);
-    Boolean existsByUser_emailAndId(String email, Long Id);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

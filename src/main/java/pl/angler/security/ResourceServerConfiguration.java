@@ -1,4 +1,4 @@
-package pl.angler.config;
+package pl.angler.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers("/trips/**" ).authenticated()
                 .antMatchers("/fish/**" ).authenticated()
                 .antMatchers("/trophy/**" ).authenticated()
-                .antMatchers("/lake/**" ).authenticated()
+                .antMatchers("/lake/**" ).permitAll()
                 .antMatchers("/fishery/**" ).authenticated()
                 ;
     }

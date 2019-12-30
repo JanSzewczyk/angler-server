@@ -49,8 +49,8 @@ public class User {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Column(name = "authenticated")
-    private boolean authenticated;
+    @Column(name = "confirmed")
+    private boolean confirmed;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH,
                                                     CascadeType.MERGE,
@@ -74,6 +74,21 @@ public class User {
             cascade = CascadeType.ALL
     )
     private List<Fishery> fisheries;
+
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "user_id")
+    private List<Notification> notifications;
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "user_id")
+    private List<Post> posts;
 
     public User() {
     }

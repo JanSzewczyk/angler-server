@@ -2,7 +2,6 @@ package pl.angler.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,12 +17,7 @@ public class FishingTrip {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(
-            cascade = {CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH}
-    )
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
@@ -38,12 +32,7 @@ public class FishingTrip {
     @Column(name = "description", length = 256)
     private String description;
 
-    @ManyToOne(
-            cascade = {CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH}
-    )
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "fishery_id")
     private Fishery fishery;
 
@@ -54,4 +43,12 @@ public class FishingTrip {
    )
     private List<Trophy> trophies;
 
+    @OneToOne(
+            mappedBy = "fishingTrip",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Post post;
 }
+
+
+

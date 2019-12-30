@@ -122,3 +122,7 @@ public class FishingTripServiceImpl implements FishingTripService {
         this.fishingTripRepository.delete(fishingTrip);
     }
 }
+
+
+
+
