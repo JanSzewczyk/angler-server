@@ -1,10 +1,10 @@
 package pl.angler.service;
 
-import pl.angler.entity.Fishery;
-import pl.angler.service.impl.FisheryServiceImpl;
+import pl.angler.dto.FisheryDto;
 
 import java.util.List;
 
 public interface FisheryService {
-    List<Fishery> getAllFisheriesByUser(String email);
+    List<FisheryDto> getAllUserFisheries(String email);
+    List<FisheryDto> getAllPublicFisheries(String userNick);
 }

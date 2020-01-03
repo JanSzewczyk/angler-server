@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.angler.dto.FisheryDto;
 import pl.angler.entity.Fish;
 import pl.angler.entity.Fishery;
 import pl.angler.service.FisheryService;
@@ -23,8 +24,8 @@ public class FisheryController {
 
     @GetMapping
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
-    public ResponseEntity<List<Fishery>> getFisheries(final Principal principal) {
+    public ResponseEntity<List<FisheryDto>> getFisheries(final Principal principal) {
 
-        return new ResponseEntity<>(this.fisheryService.getAllFisheriesByUser(principal.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(this.fisheryService.getAllUserFisheries(principal.getName()), HttpStatus.OK);
     }
 }

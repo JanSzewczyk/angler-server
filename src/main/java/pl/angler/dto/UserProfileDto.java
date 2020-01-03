@@ -4,15 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FriendDto {
-    private Long id;
+public class UserProfileDto {
     private Integer status;
-    private LocalDate date;
-    private Long userId;
-    private String userNick;
+    UserInformationDto user;
+    List<FisheryDto> fisheries = new ArrayList<>();
 }

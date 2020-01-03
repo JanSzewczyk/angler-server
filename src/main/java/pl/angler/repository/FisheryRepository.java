@@ -12,4 +12,5 @@ public interface FisheryRepository extends JpaRepository<Fishery, Long> {
 
     // TODO zrobić dla znajomych jak już zostanie to zaimplementowane
     List<Fishery> findDistinctByUser_emailOrPrivateFisheryFalse(String email);
+    List<Fishery> findByUser_nickAndPrivateFisheryFalse(String nick);
 }
