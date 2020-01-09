@@ -1,5 +1,6 @@
 package pl.angler.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,8 +26,17 @@ public class Notification {
     private LocalTime releaseTime;
 
     @Column(name = "looked")
-    private Boolean looked;
+    private Boolean looked = false;
 
     @Column(name = "message")
     private String message;
+
+    @ManyToOne(
+            cascade = {CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH}
+    )
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="role")
 public class Role {
-
     private static final long serialVersionUID = 1L;
 
     @Id

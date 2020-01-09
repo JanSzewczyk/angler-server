@@ -129,7 +129,7 @@ public class FriendServiceImpl implements FriendService {
         newFriend.setAccepted(false);
         newFriend.setDate(LocalDate.now());
 
-//        this.friendRepository.save(newFriend);
+        this.friendRepository.save(newFriend);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class FriendServiceImpl implements FriendService {
         friend.setDate(LocalDate.now());
         friend.setAccepted(true);
 
-//        this.friendRepository.save(friend);
+        this.friendRepository.save(friend);
     }
 
     @Override
@@ -154,6 +154,6 @@ public class FriendServiceImpl implements FriendService {
         if (!this.friendRepository.existsByIdAndUser_emailOrInvitedUser_email(id, userEmail, userEmail))
             throw new ConflictException("Incorrect data.");
 
-//        this.friendRepository.deleteById(id);
+        this.friendRepository.deleteById(id);
     }
 }

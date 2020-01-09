@@ -4,17 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TrophyDto {
-
+public class NotificationDto {
     private Long id;
-    private Long fishId;
-    private Long tripId;
-    private Double length;
-    private Double weight;
-    private LocalTime time;
+    private LocalDate releaseDate;
+    private LocalTime releaseTime;
+    private Boolean looked;
+    private String message;
 }
