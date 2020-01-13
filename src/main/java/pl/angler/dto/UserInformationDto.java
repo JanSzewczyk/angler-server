@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInformationDto {
-
     private String nick;
     private String firstName;
     private String lastName;

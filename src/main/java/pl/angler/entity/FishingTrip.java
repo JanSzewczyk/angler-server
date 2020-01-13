@@ -17,11 +17,6 @@ public class FishingTrip {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
-
     @Column(name = "title", length = 256)
     private String title;
 
@@ -32,21 +27,27 @@ public class FishingTrip {
     @Column(name = "description", length = 256)
     private String description;
 
+    @OneToMany(
+            mappedBy = "fishingTrip",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL}
+    )
+    private List<Trophy> trophies;
+
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "fishery_id")
     private Fishery fishery;
-
-   @OneToMany(
-           mappedBy = "fishingTrip",
-           fetch = FetchType.LAZY,
-           cascade = {CascadeType.ALL}
-   )
-    private List<Trophy> trophies;
 
     @OneToOne(
             mappedBy = "fishingTrip",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JsonIgnore
     private Post post;
 }
 

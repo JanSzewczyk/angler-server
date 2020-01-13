@@ -86,7 +86,6 @@ public class User {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    @JoinColumn(name = "user_id")
     private List<Post> posts;
 
     public User() {

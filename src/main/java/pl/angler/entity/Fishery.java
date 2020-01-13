@@ -56,5 +56,6 @@ public class Fishery {
             mappedBy = "fishery",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JsonIgnore
     private Post post;
 }

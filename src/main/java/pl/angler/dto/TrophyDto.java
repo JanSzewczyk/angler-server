@@ -10,7 +10,6 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TrophyDto {
-
     private Long id;
     private Long fishId;
     private Long tripId;

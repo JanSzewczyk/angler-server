@@ -21,7 +21,7 @@ public class FriendController {
 
     @GetMapping("/{nick}")
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
-    public ResponseEntity<List<FriendDto>> getUserFriends(final Principal principal, @PathVariable("nick") String nick ) {
+    public ResponseEntity<List<FriendDto>> getUserFriends(final Principal principal, @PathVariable("nick") String nick) {
         return new ResponseEntity<>(this.friendService.getUserFriends(nick, principal.getName()), HttpStatus.OK);
     }
 

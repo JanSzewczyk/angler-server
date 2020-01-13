@@ -44,7 +44,8 @@ public class FishingTripServiceImpl implements FishingTripService {
                                     fishery.getAltitude(),
                                     fishery.getLatitude(),
                                     fishery.getDescription()
-                            ));
+                            ),
+                            null);
                 })
                 .collect(Collectors.toList());
     }

@@ -12,6 +12,7 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
     List<Friend> findAllByUser_nick(String nick);
     List<Friend> findAllByInvitedUser_nick(String nick);
     List<Friend> findAllByUser_emailOrInvitedUser_email(String email, String email1);
+    List<Friend> findAllByUser_emailAndAcceptedTrueOrInvitedUser_emailAndAcceptedTrue(String email, String email1);
     List<Friend> findAllByInvitedUser_nickAndAcceptedTrueOrUser_nickAndAcceptedTrue(String nick, String nick1);
 
     Optional<Friend> findByUser_emailAndInvitedUser_nickOrUser_nickAndInvitedUser_email(String email, String nick, String nick1, String email1);

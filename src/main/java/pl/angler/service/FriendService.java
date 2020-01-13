@@ -7,6 +7,7 @@ import java.util.List;
 public interface FriendService {
     List<FriendDto> getUnknownUsers(String userEmail);
     List<FriendDto> getUserFriends(String nick, String userEmail);
+    List<FriendDto> getOnlyUserFriends(String userEmail);
     void inviteToUserFriend(String nick, String userEmail);
     void acceptInvitationToFriends(Long id, String userEmail);
     void deleteUserFromFriends(Long id, String userEmail);

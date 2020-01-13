@@ -35,16 +35,16 @@ public class FriendServiceImpl implements FriendService {
         friendsList.addAll(this.friendRepository.findAllByInvitedUser_nick(nick));
 
         if (this.userRepository.existsByEmailAndNick(userEmail, nick)) {
-            friends = this.processUserFriends(friendsList, userEmail, nick, true);
+            friends = this.processUserFriends(friendsList, userEmail, nick);
         }
         else {
-            friends = this.processUserFriends(this.friendRepository.findAllByInvitedUser_nickAndAcceptedTrueOrUser_nickAndAcceptedTrue(nick, nick), userEmail, nick, false);
+            friends = this.processUserFriends(this.friendRepository.findAllByInvitedUser_nickAndAcceptedTrueOrUser_nickAndAcceptedTrue(nick, nick), userEmail, nick);
         }
 
         return friends;
     }
 
-    private List<FriendDto> processUserFriends(List<Friend> friends, String email, String nick, Boolean userFlag) {
+    private List<FriendDto> processUserFriends(List<Friend> friends, String email, String nick) {
         return friends
                 .stream()
                 .map(friend -> {
@@ -86,6 +86,29 @@ public class FriendServiceImpl implements FriendService {
                     }
                     return friendInfo;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FriendDto> getOnlyUserFriends(String userEmail) {
+        return this.friendRepository
+                .findAllByUser_emailAndAcceptedTrueOrInvitedUser_emailAndAcceptedTrue(userEmail, userEmail)
+                .stream()
+                .map(friend -> {
+                    FriendDto friendInfo = new FriendDto();
+                    friendInfo.setId(friend.getId());
+                    friendInfo.setDate(friend.getDate());
+                    friendInfo.setStatus(1);
+
+                    if (friend.getUser().getEmail().equals(userEmail)) {
+                        friendInfo.setUserNick(friend.getInvitedUser().getNick());
+                        friendInfo.setUserId(friend.getInvitedUser().getId());
+                    } else {
+                        friendInfo.setUserNick(friend.getUser().getNick());
+                        friendInfo.setUserId(friend.getUser().getId());
+                    }
+                    return friendInfo;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -3,24 +3,20 @@ package pl.angler.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.angler.entity.Trophy;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FishingTripDto {
+public class PostDto {
     private Long id;
-    private String title;
-    private LocalDate tripDate;
+    private String userNick;
+    private Integer status;
     private String description;
+    private LocalDate releaseDate;
+    private LocalTime releaseTime;
+    private FishingTripDto fishingTrip;
     private FisheryDto fishery;
-    private List<Trophy> trophies = new ArrayList<>();
 }
-
-
-
-

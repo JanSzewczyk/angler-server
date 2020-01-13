@@ -34,4 +34,13 @@ public class Post {
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "fishery_id")
     private Fishery fishery;
+
+    @ManyToOne(
+            cascade = {CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH}
+    )
+    @JoinColumn(name = "user_id")
+    private User user;
 }
