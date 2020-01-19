@@ -13,4 +13,5 @@ public class FisheryDto {
     private Double altitude;
     private Double latitude;
     private String description;
+    private Boolean share;
 }

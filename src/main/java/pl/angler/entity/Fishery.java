@@ -22,11 +22,11 @@ public class Fishery {
 
     @NotNull
     @Column(name = "altitude")
-    private Double altitude; //dlugość 19
+    private Double altitude;
 
     @NotNull
     @Column(name = "latitude")
-    private Double latitude; //szerokość 51
+    private Double latitude;
 
     @Column(name = "privateFishery")
     private Boolean privateFishery = true;

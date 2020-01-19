@@ -3,6 +3,7 @@ package pl.angler.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.angler.dto.FisheryDto;
+import pl.angler.entity.Fishery;
 import pl.angler.repository.FisheryRepository;
 import pl.angler.service.FisheryService;
 
@@ -22,7 +23,8 @@ public class FisheryServiceImpl implements FisheryService {
                 fishery.getName(),
                 fishery.getAltitude(),
                 fishery.getLatitude(),
-                fishery.getDescription()
+                fishery.getDescription(),
+                fishery.getPost() != null
         )).collect(Collectors.toList());
     }
 
@@ -33,7 +35,20 @@ public class FisheryServiceImpl implements FisheryService {
                 fishery.getName(),
                 fishery.getAltitude(),
                 fishery.getLatitude(),
-                fishery.getDescription()
+                fishery.getDescription(),
+                fishery.getPost() != null
         )).collect(Collectors.toList());
+    }
+
+    @Override
+    public void setFisheryPublic(Fishery fishery) {
+        fishery.setPrivateFishery(false);
+        this.fisheryRepository.save(fishery);
+    }
+
+    @Override
+    public void setFisheryPrivate(Fishery fishery) {
+        fishery.setPrivateFishery(true);
+        this.fisheryRepository.save(fishery);
     }
 }

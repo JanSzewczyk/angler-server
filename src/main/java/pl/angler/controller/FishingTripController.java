@@ -24,7 +24,7 @@ public class FishingTripController {
     @GetMapping
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public ResponseEntity<List<FishingTripDto>> getTrips(final Principal principal) {
-        log.info("User with email: [" + principal.getName() + "] gets fishing trips.");
+        log.info("User [email: " + principal.getName() + "] get fishing trips");
         return new ResponseEntity<>(this.fishingTripService.getTrips(principal.getName()), HttpStatus.OK);
     }
 
@@ -38,8 +38,7 @@ public class FishingTripController {
 
     @GetMapping("/{id}")
     @PreAuthorize(value = "hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
-    public ResponseEntity<FishingTrip> getTripByID(final Principal principal, @PathVariable("id") Long id) {
-
+    public ResponseEntity<FishingTripDto> getTripByID(final Principal principal, @PathVariable("id") Long id) {
         return new ResponseEntity<>(this.fishingTripService.findTripById(principal.getName(), id) , HttpStatus.OK);
     }
 

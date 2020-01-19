@@ -43,9 +43,11 @@ public class FishingTripServiceImpl implements FishingTripService {
                                     fishery.getName(),
                                     fishery.getAltitude(),
                                     fishery.getLatitude(),
-                                    fishery.getDescription()
+                                    fishery.getDescription(),
+                                    fishery.getPost() != null
                             ),
-                            null);
+                            null,
+                            fishingTrip.getPost() != null);
                 })
                 .collect(Collectors.toList());
     }
@@ -87,12 +89,29 @@ public class FishingTripServiceImpl implements FishingTripService {
     }
 
     @Override
-    public FishingTrip findTripById(String email, Long id) {
+    public FishingTripDto findTripById(String email, Long id) {
         Optional<FishingTrip> findFishingTrip = this.fishingTripRepository.findByUser_emailAndId(email, id);
-        if (!findFishingTrip.isPresent()) {
+        if (!findFishingTrip.isPresent())
             throw new NotFoundException("Not found resources.");
-        }
-        return findFishingTrip.get();
+
+        FishingTrip fishingTrip = findFishingTrip.get();
+
+        Fishery fishery = fishingTrip.getFishery();
+        return new FishingTripDto(
+                fishingTrip.getId(),
+                fishingTrip.getTitle(),
+                fishingTrip.getTripDate(),
+                fishingTrip.getDescription(),
+                new FisheryDto(
+                        fishery.getId(),
+                        fishery.getName(),
+                        fishery.getAltitude(),
+                        fishery.getLatitude(),
+                        fishery.getDescription(),
+                        fishery.getPost() != null
+                ),
+                fishingTrip.getTrophies(),
+                fishingTrip.getPost() != null);
     }
 
     @Override

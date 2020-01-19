@@ -23,24 +23,20 @@ public class UserAuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) {
         Optional<User> findUser = userRepository.findByEmail(s);
-
-        if (!findUser.isPresent()) {
+        if (!findUser.isPresent())
             throw new UnauthorizedException("Invalid email.");
-        }
+
 
         User user = findUser.get();
-        if (!user.isConfirmed()) {
+        if (!user.isConfirmed())
             throw new UnauthorizedException("Your e-mail has not been confirmed, check your mailbox.");
-        }
+
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         });
 
-        UserDetails userDetails =
-                new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
-
-        return userDetails;
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 }

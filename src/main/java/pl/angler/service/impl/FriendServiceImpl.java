@@ -12,6 +12,7 @@ import pl.angler.exception.NotFoundException;
 import pl.angler.repository.FriendRepository;
 import pl.angler.repository.UserRepository;
 import pl.angler.service.FriendService;
+import pl.angler.service.NotificationService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class FriendServiceImpl implements FriendService {
     private FriendRepository friendRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public List<FriendDto> getUserFriends(String nick, String userEmail) {
@@ -142,17 +146,21 @@ public class FriendServiceImpl implements FriendService {
         Optional<User> findUser = this.userRepository.findByEmail(userEmail);
         if (!findUser.isPresent())
             throw new NotFoundException("User with mail [" + userEmail + "] not exists.");
+        User user = findUser.get();
 
         Optional<User> findInviteUser = this.userRepository.findByNick(nick);
         if (!findInviteUser.isPresent())
             throw new NotFoundException("User with nick [" + nick + "] not exists.");
+        User inviteUser = findInviteUser.get();
 
-        newFriend.setUser(findUser.get());
-        newFriend.setInvitedUser(findInviteUser.get());
+        newFriend.setUser(user);
+        newFriend.setInvitedUser(inviteUser);
         newFriend.setAccepted(false);
         newFriend.setDate(LocalDate.now());
 
         this.friendRepository.save(newFriend);
+
+        this.notificationService.sendNotificationToUser(user.getNick() + " invited you to friends.", nick);
     }
 
     @Override
@@ -170,13 +178,33 @@ public class FriendServiceImpl implements FriendService {
         friend.setAccepted(true);
 
         this.friendRepository.save(friend);
+
+        this.notificationService.sendNotificationToUser(friend.getInvitedUser().getNick() + " has accepted your invitation to your friends.",friend.getUser().getNick());
     }
 
     @Override
     public void deleteUserFromFriends(Long id, String userEmail) {
+        String notificationMessage = "";
+
         if (!this.friendRepository.existsByIdAndUser_emailOrInvitedUser_email(id, userEmail, userEmail))
             throw new ConflictException("Incorrect data.");
 
-        this.friendRepository.deleteById(id);
+        Optional<Friend> findFriend = this.friendRepository.findById(id);
+        if (!findFriend.isPresent())
+            throw new NotFoundException("Invitation not found.");
+
+        Friend friend = findFriend.get();
+        this.friendRepository.delete(friend);
+
+        String fromUserNick = !friend.getUser().getEmail().equals(userEmail) ? friend.getInvitedUser().getNick() : friend.getUser().getNick();
+        String toUserNick = friend.getUser().getEmail().equals(userEmail) ? friend.getInvitedUser().getNick() : friend.getUser().getNick();
+
+        if (friend.getAccepted()) {
+            notificationMessage = fromUserNick + " has removed you from friends.";
+            this.notificationService.sendNotificationToUser(notificationMessage, toUserNick);
+        } else if (friend.getInvitedUser().getEmail().equals(userEmail)){
+            notificationMessage = fromUserNick + " rejected your invitation to your friends.";
+            this.notificationService.sendNotificationToUser(notificationMessage, toUserNick);
+        }
     }
 }

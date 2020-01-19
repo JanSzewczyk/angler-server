@@ -19,6 +19,7 @@ public class FishingTripDto {
     private String description;
     private FisheryDto fishery;
     private List<Trophy> trophies = new ArrayList<>();
+    private Boolean share;
 }
 
 
