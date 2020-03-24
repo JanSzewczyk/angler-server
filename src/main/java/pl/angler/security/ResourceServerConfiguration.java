@@ -39,6 +39,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers("/trophy/**" ).authenticated()
                 .antMatchers("/lake/**" ).permitAll()
                 .antMatchers("/fishery/**" ).authenticated()
+                .antMatchers("/statistic/**" ).authenticated()
                 ;
     }
 }
